@@ -12,7 +12,7 @@ clean:
 gen:
 	mkdir -p consignment/domain/pb
 	protoc --proto_path=proto proto/consignment/*.proto --go_out=plugins=grpc:consignment/domain/pb
-	
+
 dependencies:
 	go mod download
 
@@ -32,7 +32,10 @@ docker-build: build
 
 
 server:
-	go run api/grpc/main.go -port 8486
+	go run consignment/api/server/main.go
+
+server:
+	go run consignment/api/cli/main.go 
 
 test:
 	mkdir -p ./coverage

@@ -23,7 +23,7 @@ type repository interface {
 // of some kind. We'll replace this with a real implementation later on.
 type Repository struct {
 	mu          sync.RWMutex
-	consigments []*pb.Consigment
+	consigments []*pb.Consignment
 }
 
 // Create a new consignment
@@ -66,12 +66,12 @@ func main() {
 
 	s := grpc.NewServer()
 
-	pb.RegisterShippingServiceServer(s, &service{})
+	pb.RegisterShippingServiceServer(s, &service{repo})
 	reflection.Register(s)
 
 	log.Println("Running on port:", port)
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to server: %v")
+		log.Fatalf("failed to server: %v", err)
 	}
 
 }
